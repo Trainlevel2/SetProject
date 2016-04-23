@@ -42,20 +42,20 @@ public class Card {
 	private int height = 68;
 	
 	//The card's constructor creates a card with specified properties
-	public Card(int theNumber, int theSymbol, int theShading, int theColor){
+	public Card(int theShading, int theSymbol, int theColor, int theNumber){
 		//Ensure legality of inputs
 		//Exceptions shouldn't be thrown assuming values are set by the Deck class
-		if(theNumber < 1 || theNumber > 3){
-			throw new IllegalArgumentException("Illegal playing card number!");
+		if(theShading < 0 || theShading > 2){
+			throw new IllegalArgumentException("Illegal playing card shading!");
 		}
 		if(theSymbol < 0 || theSymbol > 2){
 			throw new IllegalArgumentException("Illegal playing card symbol!");
 		}
-		if(theShading < 0 || theShading > 2){
-			throw new IllegalArgumentException("Illegal playing card shading!");
-		}
 		if(theColor < 0 || theColor > 2){
 			throw new IllegalArgumentException("Illegal playing card color!");
+		}
+		if(theNumber < 1 || theNumber > 3){
+			throw new IllegalArgumentException("Illegal playing card number!");
 		}
 		//assign values to variables
 		number = theNumber;
@@ -68,13 +68,13 @@ public class Card {
 		case SOLID	: filename = "set_solid.png";  break;
 		case STRIPED	: filename = "set_shaded.png"; break;
 		case CLEAR  	: filename = "set_clear.png";  break;
-		default		: System.err.println("Error: " + shade +  " is not a valid shade"); return;
+		default		: System.err.println("Error: " + shading +  " is not a valid shade"); return;
 		}
 		switch(symbol) {
 		case DIAMOND 	: y = 6;    break;
-		case OVA	: y = 83;   break;
+		case OVAL	: y = 83;   break;
 		case SQUIGGLE	: y = 160;  break;
-		default		: System.err.println("Error: " + shape +  " is not a valid shape"); return;
+		default		: System.err.println("Error: " + symbol +  " is not a valid shape"); return;
 		}
 		switch(color) {
 		case RED	: x = 10;    break;
