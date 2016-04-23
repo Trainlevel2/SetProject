@@ -5,6 +5,11 @@
  * Color: Red, Green, Purple
  * Referenced: http://math.hws.edu/javanotes/c5/s4.html
  */
+import javax.imageio.ImageIO;
+import java.awt.geom.AffineTransform;
+import java.awt.image.*;
+import java.io.*;
+ 
 public class Card {
 
 	//Codes for Symbols 
