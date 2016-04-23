@@ -19,7 +19,7 @@ public class Deck {
 			for(int isymbol = 0; isymbol <= 2; isymbol++){
 				for(int ishading = 0; ishading <= 2; ishading++){
 					for(int icolor = 0; icolor <= 2; icolor++){
-						deck[cardCt] = new Card(inumber, isymbol, ishading, icolor);
+						deck[cardCt] = new Card(ishading, isymbol, icolor, inumber);
 						cardCt++;
 					}
 				}
