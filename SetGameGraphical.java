@@ -36,9 +36,7 @@ public class SetGameGraphical {
 	public static void main(String[] args) {	
 		chosen = new Card[3];
 		table = new Table();
-		numCards = 15;
-		if(table.setsExist())
-			numCards = 12;
+		numCards = 12;
 		players = new ArrayList<Player>();
 		players.add(new Player("Eric"));
 		playerScores = new int[players.size()]; //represents current scores of players
@@ -61,10 +59,10 @@ public class SetGameGraphical {
 		JPanel MainPanel = new JPanel();
 		JPanel RightBar = getSidebar();
 		JPanel ButtonPanel = getButtonPanel(numCards/3);
-		MainPanel.add(ButtonPanel);
-		MainPanel.add(RightBar);
+		MainPanel.add(ButtonPanel,0);
+		MainPanel.add(RightBar,1);
 		
-		mainFrame.add(MainPanel);
+		mainFrame.add(MainPanel,0);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainFrame.setJMenuBar(menubar);
 		mainFrame.setVisible(true);
@@ -115,7 +113,7 @@ public class SetGameGraphical {
 	//Sets up the table Panel which contains all the cards as clickable
 	// buttons.
 	public static JPanel getButtonPanel(int cols){
-		JPanel ButtonPanel = new JPanel(new GridLayout(3,cols,20,20));
+		JPanel ButtonPanel = new JPanel(new GridLayout(3,5,20,20));
 		ImageIcon [] cards = new ImageIcon[15];
 		for(int i = 0; i<numCards; i++){
 			final int j = i;
@@ -132,10 +130,10 @@ public class SetGameGraphical {
 					}
 				}
 			});
-			ButtonPanel.add(button[i]);
+			ButtonPanel.add(button[i],i);
 		}
 		ButtonPanel.setBackground(new Color(41,110,32));
-		ButtonPanel.setPreferredSize(new Dimension(700+(cols-4)*175,400));
+		ButtonPanel.setPreferredSize(new Dimension(700+175,400));
 		return ButtonPanel;
 	}
 
