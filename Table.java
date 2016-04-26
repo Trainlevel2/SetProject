@@ -157,6 +157,8 @@ public class Table {
 	}
 	
 	public Card getCard(int i){
+		if(i>table.size())
+			return null;
 		return table.get(i);
 	}
 }
