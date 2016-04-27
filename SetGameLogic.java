@@ -4,6 +4,8 @@ import java.util.ArrayList;
 /**
  * SetGameLogic should contain everything for the set game in ASCII format
  * Login is not handled as it is done elsewhere
+ * THIS IS AN OBSELETE VERSION!!!
+ * SEE GAMEROOM.JAVA INSTEAD!!!
  * @author Darwin
  */
 

@@ -29,6 +29,7 @@ public class Game {
 		Card card3;
 		if(t.isSet(cardIndex1, cardIndex2, cardIndex3)){ //If correct, +1 to score, remove and replace cards from table
 			playerScores[playerToMove]++;
+			//TODO: send to server a message to increment player points
 			card1 = t.getCard(cardIndex1);
 			card2 = t.getCard(cardIndex2);
 			card3 = t.getCard(cardIndex3);
@@ -36,17 +37,22 @@ public class Game {
 			t.removeCard(card2);
 			t.removeCard(card3);
 			if(t.getCardCount() < 12){ //only draws more cards if there are fewer than 12 on the table
+				//TODO: send to server a message to update tables in all clients
 				t.addCard(3);
 			}
 			
 			//add cards to table until set exists or no cards in deck
 			while(!t.setsExist() && (t.getDeckCardCount() > 0)){
+				//TODO: send to server a message to update tables in all clients
 				t.addCard(3);
 			}
+			//TODO: receive from server a message to update clients' tables and player scores
 			return true;
 		}
 		else{ //If incorrect -1 to score, no change to table
 			playerScores[playerToMove]--;
+			//TODO: send to server a message to decrement player points
+			//TODO: receive from server a message to update clients' player scores
 			return false;
 		}		
 	}
@@ -62,12 +68,18 @@ public class Game {
 		return mostIndex;
 	}
 	
+	//Updates high scores for all players
+	//Returns a list of players who have higher high scores now,
+	//with their corresponding names and new high scores
 	public void updateHighScores(){
+		ArrayList<Player> newHighScorePlayers = new ArrayList<Player>();
 		for(int i = 0; i < playerScores.length; i++){
 			if(playerScores[i] > players.get(i).getHighScore()){
 				players.get(i).setHighScore(playerScores[i]);
+				newHighScorePlayers.add(players.get(i));
 			}
 		}
+		//TODO: send newHighScorePlayers to server to update high scores in the database
 	}
 	
 	//The main function in Game, provides a fun textual experience with playing Set.
@@ -152,7 +164,6 @@ public class Game {
 		
 		//Update high scores
 		updateHighScores();
-		
 		gameReader.close();
 	}	
 }
