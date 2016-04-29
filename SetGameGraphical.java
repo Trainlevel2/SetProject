@@ -12,8 +12,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,7 +26,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 public class SetGameGraphical {
-	private static JButton button[] = new JButton[15];
+	private static JButton button[] = new JButton[21];
 	private static int numPressed;
 	private static int numCards;
 	private static ArrayList<Player> players;
@@ -113,9 +115,9 @@ public class SetGameGraphical {
 	//Sets up the table Panel which contains all the cards as clickable
 	// buttons.
 	public static JPanel getButtonPanel(int cols){
-		JPanel ButtonPanel = new JPanel(new GridLayout(3,5,20,20));
-		ImageIcon [] cards = new ImageIcon[15];
-		for(int i = 0; i<numCards; i++){
+		JPanel ButtonPanel = new JPanel(new GridLayout(3,7,20,20));
+		ImageIcon [] cards = new ImageIcon[21];
+		for(int i = 0; i<table.getSize(); i++){
 			final int j = i;
 			cards[j] = new ImageIcon(table.getCard(i).getImage());
 			button[j] = new JButton(cards[j]);
@@ -140,7 +142,14 @@ public class SetGameGraphical {
 	//Sets up a sidebar that lists players and their scores
 	// as well as contains the SET and Clear buttons for the game
 	public static JPanel getSidebar(){
-		JPanel RightBar = new JPanel(new GridLayout(players.size()+2,1,10,10));
+//		BufferedImage pikachu = null;
+//		try{
+//			pikachu = ImageIO.read(new File("Pikachu2.png"));
+//		} catch(Exception e){
+//			System.err.println("No File found");
+//		}
+//		JLabel pika = new JLabel(new ImageIcon(pikachu));
+		JPanel RightBar = new JPanel(new GridLayout(players.size()+3,1,10,10));
 		JButton set   = new JButton("SET");
 		set.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -153,22 +162,25 @@ public class SetGameGraphical {
 				clearSelection();
 			}
 		});
-		RightBar.add(clear);
-		RightBar.add(set);
+//		JPanel pokemon = new JPanel();
+//		pokemon.add(pika);
+//		pokemon.setVisible(false);
+		RightBar.add(clear,0);
+		RightBar.add(set,1);
 
 		//Edit for modified Player class later
 		JLabel []playerlist = new JLabel[players.size()];
 		for(int i = 0; i<players.size(); i++){
 			playerlist[i] = new JLabel("Player: "+players.get(i).getName()+", "+playerScores[i]+"\n");
 			playerlist[i].setFont(new Font("Arial",1,18));
-			RightBar.add(playerlist[i]);
+			RightBar.add(playerlist[i],i+2);
 		}
 		RightBar.setBackground(new Color(232,232,232));
 		return RightBar;
 	}
 
 	public static void clearSelection(){
-		for(int i = 0; i<12; i++){
+		for(int i = 0; i<table.getCardCount(); i++){
 			button[i].setBackground(new Color(29,77,22));
 		}
 		numPressed=0;		
@@ -179,8 +191,8 @@ public class SetGameGraphical {
 			clearSelection();
 			return;
 		}
+		clearSelection();
 		if(!table.isSet(chosen[0], chosen[1], chosen[2])){
-			clearSelection();
 			playerScores[playernum]--;
 			System.out.println("Player "+(playernum+1)+" lost a point! (Score = "+playerScores[playernum]+")");
 			return;
@@ -196,11 +208,23 @@ public class SetGameGraphical {
 			}
 			//add cards to table until set exists or no cards in deck
 			if(!table.setsExist() && (table.getDeckCardCount() > 0)){
+				System.out.print("No sets on the board! 3 added.\n");
 				table.addCard(3);
 				numCards+=3;
 			}
+			else if(!table.setsExist()){
+				int max = -10000;
+				int win = 0;
+				for(int i = 0; i<playerScores.length; i++)
+					if(max<playerScores[i]){
+						max = playerScores[i];
+						win = i;
+					}
+				System.out.println("Player "+ (win+1)+" Wins!\n");
+				System.exit(0);
+			}
 			System.out.println("Player "+(playernum+1)+" got a point! (Score = "+playerScores[playernum]+")");
-			clearSelection();
+			System.out.println("There are "+table.getDeckCardCount()+" cards left.");
 			JPanel ButtonPanel = getButtonPanel(numCards/3);
 			JPanel Sidebar = getSidebar();
 			JPanel MainPanel = new JPanel();

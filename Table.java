@@ -33,6 +33,10 @@ public class Table {
 		}
 	}
 	
+	public int getSize(){
+		return table.size();
+	}
+	
 	//remove a card from the table
 	public void removeCard(Card c){
 		if(!table.remove(c)){
