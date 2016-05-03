@@ -108,7 +108,8 @@ public class Card {
 			AffineTransformOp scaleOp = 
 			   new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 			after = scaleOp.filter(before, after);
-			after = after.getSubimage(x*2, y*2, width*2, height*2);
+			after = after.getSubimage(y*2, x*2, height*2, width*2);
+			System.out.println("y = "+ y*2 + ", x = " + x*2 + ", height = "+ height*2 + ", width = "+width*2);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 
