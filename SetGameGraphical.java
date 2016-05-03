@@ -206,13 +206,14 @@ public class SetGameGraphical {
 				table.addCard(3);
 				numCards = table.getCardCount();
 			}
+			
 			//add cards to table until set exists or no cards in deck
-			if(!table.setsExist() && (table.getDeckCardCount() > 0)){
+			while(!table.setsExist() && (table.getDeckCardCount() > 0)){
 				System.out.print("No sets on the board! 3 added.\n");
 				table.addCard(3);
 				numCards+=3;
 			}
-			else if(!table.setsExist()){
+			if(!table.setsExist() && table.getDeckCardCount()==0){
 				int max = -10000;
 				int win = 0;
 				for(int i = 0; i<playerScores.length; i++)

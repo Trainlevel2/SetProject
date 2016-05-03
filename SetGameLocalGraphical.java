@@ -230,7 +230,7 @@ public class SetGameLocalGraphical {
 						max = playerScores[i];
 						win = i;
 					}
-				System.out.println("Player "+ (win+1)+" Wins!\n");
+				System.out.println("Player "+ (win+1)+" Wins! "+max+" points!\n");
 				System.exit(0);
 			}
 			System.out.println("Player "+(playernum+1)+" got a point! (Score = "+playerScores[playernum]+")");
